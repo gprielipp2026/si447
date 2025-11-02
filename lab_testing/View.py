@@ -1,6 +1,6 @@
 from threading import Thread
 from CustomExceptions import *
-import pwinput
+import getpass 
 
 class View:
   def __init__(self):
@@ -27,7 +27,7 @@ class View:
   def __credentials(self):
     print()
     self.input('Username: ')
-    pswd = pwinput.pwinput(prompt='Password: ', mask='*')
+    pswd = getpass.getpass(prompt='Password: ', mask='*')
     print()
     self.inputs.append(pswd)
 
