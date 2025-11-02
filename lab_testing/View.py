@@ -27,7 +27,7 @@ class View:
   def __credentials(self):
     print()
     self.input('Username: ')
-    pswd = getpass.getpass(prompt='Password: ', mask='*')
+    pswd = getpass.getpass(prompt='Password: ')
     print()
     self.inputs.append(pswd)
 
