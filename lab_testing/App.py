@@ -8,7 +8,7 @@ class App:
   def __init__(self):
     self.view = View()
     self.user = UserModel()
-    self.server = ServerModel('https://lnx1073302govt:8000')
+    self.server = ServerModel('http://lnx1073302govt:8000')
 
     self.controller = Controller(self.view, self.user, self.server)
 
