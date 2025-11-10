@@ -1,3 +1,6 @@
 [submodule "my-ic322-portfolio"]
 	path = my-ic322-portfolio
 	url = https://gitlab.usna.edu/downs/my-ic322-portfolio
+[submodule "mygitlab-test-prielipp"]
+	path = mygitlab-test-prielipp
+	url = git@gitlab.usna.edu:ic470-fall-2023/mygitlab-test-prielipp.git

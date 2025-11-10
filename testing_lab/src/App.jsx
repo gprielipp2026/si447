@@ -1,23 +1,30 @@
+import { useState } from 'react';
 import './App.css';
 
-import { PlayerModel } from './Models/PlayerModel.ts';
-import { ServerModel } from './Models/ServerModel.ts';
+import { PlayerModel } from './Models/PlayerModel';
+import { ServerModel } from './Models/ServerModel';
+import LandingPage from './Pages/LandingPage';
 
 function App() {
-  let player = new PlayerModel();
-  let server = new ServerModel();
+	const [signedIn, setSignedIn] = useState(false);
 
-  return (
-    <div className="App">
-      <div>
-        <p>
-          {player.getUsername()}
-        </p>
-        <input type="text" name="username" id="username" onInput={e => player.setUsername(e.target.value)}/>
+	let player = new PlayerModel(setSignedIn);
+	let server = new ServerModel();
 
-      </div>
-    </div>
-  );
+	return (
+		<div className="App">
+			{signedIn ? (
+				<>
+					<h1>Signed in :)</h1>
+				</>
+			) : (
+				<LandingPage
+					player={player}
+					server={server}
+				/>
+			)}
+		</div>
+	);
 }
 
 export default App;

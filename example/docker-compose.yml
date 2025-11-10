@@ -1,0 +1,9 @@
+services:
+  myapacheserver:
+    hostname: localhost
+    build:
+      context: .
+    ports:
+      - "8080:9999"
+    volumes:
+      - ./src/:/var/www/html/
