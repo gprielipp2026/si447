@@ -1,4 +1,6 @@
 from  ServerModel import *
+from CustomExceptions import *
+import pytest
 
 class TestServerModel:
   def beforeEach(self):
@@ -7,7 +9,20 @@ class TestServerModel:
   def test_create(self):
     self.beforeEach()
 
-    res = self.server.create("user", "pass")
+    with pytest.raises(UserExists):
+      res = self.server.create("user", "pass") # already created
 
-    assert ('message' in res)
+  def test_login(self):
+    self.beforeEach()
+
+    res = self.server.login("user", "pass")
+
+  def test_look(self):
+    self.beforeEach()
+
+    tok = self.server.login("user", "pass")
+    
+    res = self.server.look(tok)
+
+    
 

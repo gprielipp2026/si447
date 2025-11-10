@@ -1,5 +1,6 @@
 import requests
 from CustomExceptions import *
+import json
 
 class ServerModel:
     def __init__(self, url) -> None:
@@ -8,10 +9,10 @@ class ServerModel:
     def create(self, username, password) -> str:
         resp = requests.post(
             self.url + '/user',
-            data={
+            data=json.dumps({
                 'username': username,
                 'password': password
-            }
+            })
         )
 
         if resp.status_code == 200:
@@ -20,7 +21,7 @@ class ServerModel:
             raise UserExists('Username already exists')
         elif resp.status_code == 422:
             # validation error
-            resp = resp.json()['detail']
+            resp = resp.json()['detail'][0]
             raise ValidationError(f'{resp["type"]}: {resp["msg"]}')
         else:
             raise UnexpectedServerResponseCode(f'Unexpected response code: {resp.status_code}')
@@ -28,10 +29,10 @@ class ServerModel:
     def login(self, username, password) -> str:
         resp = requests.post(
             self.url + '/login',
-            data={
+            data=json.dumps({
                 'username': username,
                 'password': password
-            }
+            })
         )
 
         if resp.status_code == 200:
@@ -40,7 +41,7 @@ class ServerModel:
             raise InvalidLoginAttempt('Username or Password are incorrect')
         elif resp.status_code == 422:
             # validation error
-            resp = resp.json()['detail']
+            resp = resp.json()['detail'][0]
             raise ValidationError(f'{resp["type"]}: {resp["msg"]}')
         else:
             raise UnexpectedServerResponseCode(f'Unexpected response code: {resp.status_code}')
@@ -48,9 +49,9 @@ class ServerModel:
     def move(self, token, direction) -> str:
         resp = requests.post(
             self.url + '/move',
-            data={
+            data=json.dumps({
                 'direction': direction
-            },
+            }),
             headers={
                 'session-token': token
             }
@@ -62,7 +63,7 @@ class ServerModel:
             raise InvalidDirectionOrMovement('Username or Password are incorrect')
         elif resp.status_code == 422:
             # validation error
-            resp = resp.json()['detail']
+            resp = resp.json()['detail'][0]
             raise ValidationError(f'{resp["type"]}: {resp["msg"]}')
         else:
             raise UnexpectedServerResponseCode(f'Unexpected response code: {resp.status_code}')
@@ -79,7 +80,7 @@ class ServerModel:
             return resp.json()['description']
         elif resp.status_code == 422:
             # validation error
-            resp = resp.json()['detail']
+            resp = resp.json()['detail'][0]
             raise ValidationError(f'{resp["type"]}: {resp["msg"]}')
         else:
             raise UnexpectedServerResponseCode(f'Unexpected response code: {resp.status_code}')
@@ -87,9 +88,9 @@ class ServerModel:
     def doSomething(self, token, action) -> str:
         resp = requests.post(
             self.url + '/doing',
-            data={
+            data=json.dumps({
                 'action': action
-            },
+            }),
             headers={
                 'session-token': token
             }
@@ -99,7 +100,7 @@ class ServerModel:
             return resp.json()['message']
         elif resp.status_code == 422:
             # validation error
-            resp = resp.json()['detail']
+            resp = resp.json()['detail'][0]
             raise ValidationError(f'{resp["type"]}: {resp["msg"]}')
         else:
             raise UnexpectedServerResponseCode(f'Unexpected response code: {resp.status_code}')
@@ -107,9 +108,9 @@ class ServerModel:
     def useItem(self, token, item) -> dict:
         resp = requests.post(
             self.url + '/use',
-            data={
+            data=json.dumps({
                 'item': item
-            },
+            }),
             headers={
                 'session-token': token
             }
@@ -121,7 +122,7 @@ class ServerModel:
             raise ItemNotFound('Username or Password are incorrect')
         elif resp.status_code == 422:
             # validation error
-            resp = resp.json()['detail']
+            resp = resp.json()['detail'][0]
             raise ValidationError(f'{resp["type"]}: {resp["msg"]}')
         else:
             raise UnexpectedServerResponseCode(f'Unexpected response code: {resp.status_code}')

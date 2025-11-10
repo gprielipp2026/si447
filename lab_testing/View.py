@@ -41,9 +41,21 @@ class View:
     self.input()
 
   def success(self, msg):
-    self.display('Success!')
+    print('Success!')
     self.display(msg)
 
   def error(self, msg):
-    self.display('Error!')
+    print('Error!')
     self.display(msg)
+
+  def move(self):
+    self.display("You may try: north, south, east, or west")
+    self.input()
+
+  def use(self):
+    self.display("Which item would you like to use? ")
+    self.input()
+
+  def do(self):
+    self.display("What action do you want to do?")
+    self.input()
